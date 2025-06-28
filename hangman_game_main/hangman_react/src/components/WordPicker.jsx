@@ -1,11 +1,15 @@
-
+import { useState } from "react";
+import Button from 'react-bootstrap/Button';
 
 
 
 
 export default function WordPicker()
 {
+let [randomNumber, setRandomNumber] = useState(0);
+let [puzzleWord, setPuzzleWord] = useState('inapplicable');
 const wordBankMain = [
+
   "apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon",
   "mango", "nectarine", "orange", "papaya", "quince", "raspberry", "strawberry", "tangerine", "ugli", "watermelon",
   "apricot", "blackberry", "coconut", "durian", "gooseberry", "jackfruit", "kumquat", "lime", "lychee", "melon",
@@ -63,12 +67,23 @@ const wordBankMain = [
   "bench", "bunkbed", "couch", "futon", "hammock", "mattress", "rocker", "stool", "throne", "wardrobe"
 ];
 
-let randomNumber = Math.floor((Math.random()*wordBankMain.length));
+function startNewPuzzle()
+{
+    let newRandomNumber = Math.floor((Math.random()*wordBankMain.length));
+    setRandomNumber(newRandomNumber);
+    let newPuzzleWord = wordBankMain[newRandomNumber];
+    setPuzzleWord(newPuzzleWord);
+}
+
 
 
     return(
         <>
             <h1>Word Picker Component</h1>
+            <p>{randomNumber}</p>
+            <p>{puzzleWord}</p>
+            <br/>
+            <Button onClick={startNewPuzzle}>New Puzzle</Button>
         </>
     )
 }
