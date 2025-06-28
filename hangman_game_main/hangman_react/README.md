@@ -58,7 +58,7 @@
 - use a different RNG to pick the word
     - seed with the system time
 
-#### Buttons as Input letters
+#### Buttons as Input letters (options disappear as you guess like 'Guess Who')
 - users will be able to click button on the screen to guess letters
 - guessed letters would be shown with a strikethrough and/ or lowered opacity
 - incorrect guesses could be shown in red with a lower opacity
