@@ -10,6 +10,7 @@ const [randomNumber, setRandomNumber] = useState(0);
 const [puzzleWord, setPuzzleWord] = useState('inapplicable');
 const [puzzleDisplayArray, setPuzzleDisplayArray] = useState([]);
 const [blankSpacesArray, setBlankSpacesArray] = useState([]);
+const [usedPuzzleWords, setUsedPuzzleWords] = useState([]);
 
 
 const wordBankMain = [
@@ -77,18 +78,17 @@ useEffect(() => {
     const puzzleWordLetterArray = puzzleWord.split(''); //converts string to array
     const newBlankSpacesArray = puzzleWordLetterArray.map(() => ' __ ');
     setBlankSpacesArray(newBlankSpacesArray);
+    setPuzzleDisplayArray(newBlankSpacesArray);
 }, [puzzleWord]);
 
 function startNewPuzzle()
 {
 // select new word from the word bank
     let newRandomNumber = Math.floor((Math.random()*wordBankMain.length));
-    setRandomNumber(newRandomNumber);
     let newPuzzleWord = wordBankMain[newRandomNumber];
+    usedPuzzleWords.push(newPuzzleWord);
+    setRandomNumber(newRandomNumber);
     setPuzzleWord(newPuzzleWord);
-    
-
-return
 }
 
 
@@ -98,7 +98,9 @@ return
             <h1>Word Picker Component</h1>
             <p>Random Number: {randomNumber}</p>
             <p>Puzzle Word: {puzzleWord}</p>
+            <p>Used Words: {usedPuzzleWords.join(", ")}</p>
             <p>Blank Spaces: {blankSpacesArray.join(" ")}</p>
+            <p>Display Array: {puzzleDisplayArray.join(" ")}</p>
             <Button onClick={startNewPuzzle}>New Puzzle</Button>
         </>
     )
