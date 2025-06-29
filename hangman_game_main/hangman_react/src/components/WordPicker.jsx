@@ -1,16 +1,9 @@
-import { useState, useEffect } from "react";
-import Button from 'react-bootstrap/Button';
 
 
 
 
 export default function WordPicker()
 {
-const [randomNumber, setRandomNumber] = useState(0);
-const [puzzleWord, setPuzzleWord] = useState('inapplicable');
-const [puzzleDisplayArray, setPuzzleDisplayArray] = useState([]);
-const [blankSpacesArray, setBlankSpacesArray] = useState([]);
-const [usedPuzzleWords, setUsedPuzzleWords] = useState([]);
 
 
 const wordBankMain = [
@@ -73,45 +66,9 @@ const wordBankMain = [
 ];
 
 
-// create blank space array and updates that array when the puzzle word changes
-useEffect(() => {
-    const puzzleWordLetterArray = puzzleWord.split(''); //converts string to array
-    const newBlankSpacesArray = puzzleWordLetterArray.map(() => ' __ ');
-    setBlankSpacesArray(newBlankSpacesArray);
-}, [puzzleWord]);
-
-useEffect(() => {
-    const newDisplayArray = blankSpacesArray;
-    setPuzzleDisplayArray(newDisplayArray);
-},[blankSpacesArray]);
-
-function startNewPuzzle()
-{
-    const availableWords = wordBankMain.filter(word => !usedPuzzleWords.includes(word));
-
-    if (availableWords.length === 0) //reset used words list if all words have been used
-        {
-            setUsedPuzzleWords([]);
-            availableWords.push(...wordBankMain);
-        }
-    const newRandomNumber = Math.floor(Math.random() * availableWords.length);
-    const newPuzzleWord = availableWords[newRandomNumber];
-    setUsedPuzzleWords(prev => [...prev, newPuzzleWord]);
-    setRandomNumber(newRandomNumber);
-    setPuzzleWord(newPuzzleWord);
-}
-
-
-
     return(
         <>
             <h1>Word Picker Component</h1>
-            <p>Random Number: {randomNumber}</p>
-            <p>Puzzle Word: {puzzleWord}</p>
-            <p>Used Words: {usedPuzzleWords.join(", ")}</p>
-            <p>Blank Spaces: {blankSpacesArray.join(" ")}</p>
-            <p>Display Array: {puzzleDisplayArray.join(" ")}</p>
-            <Button onClick={startNewPuzzle}>New Puzzle</Button>
         </>
     )
 }
