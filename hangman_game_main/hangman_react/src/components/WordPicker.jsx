@@ -73,20 +73,30 @@ const wordBankMain = [
 ];
 
 
-// create blank space array and update the array when the puzzle word changes
+// create blank space array and updates that array when the puzzle word changes
 useEffect(() => {
     const puzzleWordLetterArray = puzzleWord.split(''); //converts string to array
     const newBlankSpacesArray = puzzleWordLetterArray.map(() => ' __ ');
     setBlankSpacesArray(newBlankSpacesArray);
-    setPuzzleDisplayArray(newBlankSpacesArray);
 }, [puzzleWord]);
+
+useEffect(() => {
+    const newDisplayArray = blankSpacesArray;
+    setPuzzleDisplayArray(newDisplayArray);
+},[blankSpacesArray]);
 
 function startNewPuzzle()
 {
-// select new word from the word bank
-    let newRandomNumber = Math.floor((Math.random()*wordBankMain.length));
-    let newPuzzleWord = wordBankMain[newRandomNumber];
-    usedPuzzleWords.push(newPuzzleWord);
+    const availableWords = wordBankMain.filter(word => !usedPuzzleWords.includes(word));
+
+    if (availableWords.length === 0) //reset used words list if all words have been used
+        {
+            setUsedPuzzleWords([]);
+            availableWords.push(...wordBankMain);
+        }
+    const newRandomNumber = Math.floor(Math.random() * availableWords.length);
+    const newPuzzleWord = availableWords[newRandomNumber];
+    setUsedPuzzleWords(prev => [...prev, newPuzzleWord]);
     setRandomNumber(newRandomNumber);
     setPuzzleWord(newPuzzleWord);
 }
