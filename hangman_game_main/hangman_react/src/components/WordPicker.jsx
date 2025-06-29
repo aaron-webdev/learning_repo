@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 
 
@@ -6,8 +6,12 @@ import Button from 'react-bootstrap/Button';
 
 export default function WordPicker()
 {
-let [randomNumber, setRandomNumber] = useState(0);
-let [puzzleWord, setPuzzleWord] = useState('inapplicable');
+const [randomNumber, setRandomNumber] = useState(0);
+const [puzzleWord, setPuzzleWord] = useState('inapplicable');
+const [puzzleDisplayArray, setPuzzleDisplayArray] = useState([]);
+const [blankSpacesArray, setBlankSpacesArray] = useState([]);
+
+
 const wordBankMain = [
 
   "apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon",
@@ -67,6 +71,14 @@ const wordBankMain = [
   "bench", "bunkbed", "couch", "futon", "hammock", "mattress", "rocker", "stool", "throne", "wardrobe"
 ];
 
+
+// create blank space array and update the array when the puzzle word changes
+useEffect(() => {
+    const puzzleWordLetterArray = puzzleWord.split(''); //converts string to array
+    const newBlankSpacesArray = puzzleWordLetterArray.map(() => ' __ ');
+    setBlankSpacesArray(newBlankSpacesArray);
+}, [puzzleWord]);
+
 function startNewPuzzle()
 {
 // select new word from the word bank
@@ -74,19 +86,9 @@ function startNewPuzzle()
     setRandomNumber(newRandomNumber);
     let newPuzzleWord = wordBankMain[newRandomNumber];
     setPuzzleWord(newPuzzleWord);
+    
 
-// convert the puzzle word into a string and create the blank spaces
-    const puzzleWordLetterArray = puzzleWord.split('');
-    let blankSpacesArray = [];
-
-    if(i=o,i<puzzleWordLetterArray.length)
-    {
-        blankSpacesArray.push(' _ ');
-        i++;
-
-    }
-
-
+return
 }
 
 
@@ -94,11 +96,9 @@ function startNewPuzzle()
     return(
         <>
             <h1>Word Picker Component</h1>
-            <p>{randomNumber}</p>
-            <p>{puzzleWord}</p>
-            <p>{puzzleWordLetterArray}</p>
-            <p>{blankSpacesArray}</p>
-            <br/>
+            <p>Random Number: {randomNumber}</p>
+            <p>Puzzle Word: {puzzleWord}</p>
+            <p>Blank Spaces: {blankSpacesArray.join(" ")}</p>
             <Button onClick={startNewPuzzle}>New Puzzle</Button>
         </>
     )
