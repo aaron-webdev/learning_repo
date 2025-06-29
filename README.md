@@ -8,6 +8,4 @@
 - bite sized learning projects to help teach myself techniques and methods for quality develpoment work
 
 # Contents
-- Hangman Game
-- Login Page
-- 
+- Hangman Game 

@@ -69,10 +69,24 @@ const wordBankMain = [
 
 function startNewPuzzle()
 {
+// select new word from the word bank
     let newRandomNumber = Math.floor((Math.random()*wordBankMain.length));
     setRandomNumber(newRandomNumber);
     let newPuzzleWord = wordBankMain[newRandomNumber];
     setPuzzleWord(newPuzzleWord);
+
+// convert the puzzle word into a string and create the blank spaces
+    const puzzleWordLetterArray = puzzleWord.split('');
+    let blankSpacesArray = [];
+
+    if(i=o,i<puzzleWordLetterArray.length)
+    {
+        blankSpacesArray.push(' _ ');
+        i++;
+
+    }
+
+
 }
 
 
@@ -82,6 +96,8 @@ function startNewPuzzle()
             <h1>Word Picker Component</h1>
             <p>{randomNumber}</p>
             <p>{puzzleWord}</p>
+            <p>{puzzleWordLetterArray}</p>
+            <p>{blankSpacesArray}</p>
             <br/>
             <Button onClick={startNewPuzzle}>New Puzzle</Button>
         </>
